@@ -1,0 +1,11 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+98:DA:C4:F9:EE:67, 2021-03-30 20:03:17, 2021-03-30 20:04:30,  6, 270, WPA2, CCMP, PSK, -59,      137,       10,   0.  0.  0.  0,  16, NSYSU9-1-3F-2.4G, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+38:F9:D3:58:30:3A, 2021-03-30 20:03:17, 2021-03-30 20:04:24, -78,       20, 98:DA:C4:F9:EE:67,
+7C:49:EB:38:E7:41, 2021-03-30 20:03:17, 2021-03-30 20:04:30, -58,      440, 98:DA:C4:F9:EE:67,
+78:11:DC:AD:24:7F, 2021-03-30 20:03:31, 2021-03-30 20:04:16, -26,        3, 98:DA:C4:F9:EE:67,
+48:45:20:84:96:8A, 2021-03-30 20:03:25, 2021-03-30 20:04:09, -12,       14, 98:DA:C4:F9:EE:67,
+78:8B:2A:C3:5A:51, 2021-03-30 20:03:23, 2021-03-30 20:04:12,  -2,       15, 98:DA:C4:F9:EE:67,
+

@@ -1,0 +1,6 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+78:8B:2A:C3:5A:51, 2021-03-30 19:53:21, 2021-03-30 19:54:05,  6,  65, OPN, ,   ,  -4,      151,        0,   0.  0.  0.  0,  31, chuangmi-camera-029a02_miap5A51, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+
