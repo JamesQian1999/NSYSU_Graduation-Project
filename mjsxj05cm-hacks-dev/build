@@ -1,0 +1,151 @@
+#!/bin/bash
+
+github_download_release_asset() {
+  local owner=$1
+  local repository=$2
+  local tagName=$3
+  local assetName=$4
+
+  is_200_ok=$(wget -q --show-progress --server-response https://github.com/${owner}/${repository}/releases/download/${tagName}/${assetName} 2>&1 | grep -c 'HTTP/1.1 200 OK')
+  if [ $is_200_ok != "1" ]; then
+    echo "Failed to get ${assetName}"
+    exit 1
+  fi
+}
+
+download_from_url() {
+  local assetName=$1
+  is_200_ok=$(wget -q --show-progress --server-response ${1} 2>&1 | grep -c 'HTTP/1.1 200 OK')
+  if [ $is_200_ok != "1" ]; then
+    echo "Failed to get ${assetName}"
+    exit 1
+  fi
+}
+
+process_external_download() {
+  local url=$1
+  local filename=$2
+
+  echo Downloading \"${url}\"
+
+  download_from_url ${url}
+}
+
+process_github_release_asset_download() {
+  local owner=$1
+  local repository=$2
+  local assetName=$3
+
+  if [ $releaseType == "dev" ]; then
+    tagName="latest-rc"
+  fi
+
+  if [ $releaseType == "final" ]; then
+    tagName="latest"
+  fi
+
+  echo Downloading \"${owner}/${repository}@${tagName}/${assetName}\"
+
+  github_download_release_asset ${owner} ${repository} ${tagName} ${assetName}
+}
+
+extract() {
+  local fileName=${1}
+  case "$fileName" in
+  *.zip)
+    echo Extracting ${fileName}
+    extract_zip ${fileName}
+    rm -f ${assetFilename}
+    ;;
+  *.tar)
+    echo Extracting ${fileName}
+    extract_tar ${fileName}
+    rm -f ${assetFilename}
+    ;;
+  esac
+}
+
+extract_zip() {
+  unzip -qq ${1}
+}
+
+extract_tar() {
+  tar -xf ${1}
+}
+
+process_build_file() {
+  local buildType=$1
+  local buildFilePath=.build
+  local source=$(cat ${buildFilePath} | jq -r ".source")
+  local assetFilename=""
+
+  if [ "${source}" == "external" ]; then
+    local url=$(cat ${buildFilePath} | jq -r ".url")
+    assetFilename=$(cat ${buildFilePath} | jq -r ".filename")
+    process_external_download ${url} ${assetFilename}
+
+  elif [ "${source}" == "github-release-asset" ]; then
+    local owner=$(cat ${buildFilePath} | jq -r ".owner")
+    local repository=$(cat ${buildFilePath} | jq -r ".repository")
+    assetFilename=$(cat ${buildFilePath} | jq -r ".assetName")
+    process_github_release_asset_download ${owner} ${repository} ${assetFilename}
+  fi
+
+  rm $buildFilePath
+
+  if [[ ! -z ${assetFilename} ]]; then
+    extract ${assetFilename}
+  fi
+
+  if [ -d "uclibc" ]; then
+    cp uclibc/* .
+    rm -rf libc uclibc
+  fi
+}
+
+clean() {
+  echo "Cleaning..."
+  rm -rf dist
+}
+
+build() {
+  echo "Building..."
+  test -d dist || mkdir dist
+  cp -r sdcard/* dist/
+  shopt -s globstar
+  for buildFile in dist/**/.build; do
+    pushd $(dirname ${buildFile})
+    process_build_file ${1}
+    popd
+  done
+}
+
+package() {
+  pushd dist
+  zip -r sdcard.zip * -x hacks/**/libc -x hacks/**/uclibc
+  popd
+}
+
+main() {
+  local target=$1
+
+  case ${target} in
+  clean)
+    clean
+    ;;
+
+  dev | rc | final)
+    releaseType=$1
+
+    clean
+    build
+    package
+    ;;
+
+  *)
+    echo "Invalid target '${1}'"
+    ;;
+  esac
+}
+
+main $1

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE detection-run SYSTEM "http://kismetwireless.net/kismet-3.1.0.dtd">
+
+<detection-run kismet-version="airodump-ng-1.0" start-time="Tue Mar 30 19:53:21 2021">
+
+	<wireless-network number="1" type="infrastructure" first-time="Tue Mar 30 19:53:21 2021" last-time="Tue Mar 30 19:54:05 2021">
+		<SSID first-time="Tue Mar 30 19:53:21 2021" last-time="Tue Mar 30 19:54:05 2021">
+			<type>Beacon</type>
+			<max-rate>65.000000</max-rate>
+			<packets>151</packets>
+			<beaconrate>10</beaconrate>
+			<encryption>None</encryption>
+			<essid cloaked="false">chuangmi-camera-029a02_miap5A51</essid>
+		</SSID>
+		<BSSID>78:8B:2A:C3:5A:51</BSSID>
+		<manuf>Unknown</manuf>
+		<channel>6</channel>
+		<freqmhz>2437 155</freqmhz>
+		<maxseenrate>65000</maxseenrate>
+		<carrier>IEEE 802.11b+</carrier>
+		<encoding>CCK</encoding>
+		<packets>
+			<LLC>0</LLC>
+			<data>0</data>
+			<crypt>0</crypt>
+			<total>155</total>
+			<fragments>0</fragments>
+			<retries>0</retries>
+		</packets>
+		<datasize>0</datasize>
+		<snr-info>
+			<last_signal_dbm>-4</last_signal_dbm>
+			<last_noise_dbm>0</last_noise_dbm>
+			<last_signal_rssi>-4</last_signal_rssi>
+			<last_noise_rssi>0</last_noise_rssi>
+			<min_signal_dbm>-4</min_signal_dbm>
+			<min_noise_dbm>0</min_noise_dbm>
+			<min_signal_rssi>1024</min_signal_rssi>
+			<min_noise_rssi>1024</min_noise_rssi>
+			<max_signal_dbm>-4</max_signal_dbm>
+			<max_noise_dbm>0</max_noise_dbm>
+			<max_signal_rssi>-4</max_signal_rssi>
+			<max_noise_rssi>0</max_noise_rssi>
+		</snr-info>
+		<bsstimestamp>571801980</bsstimestamp>
+		<cdp-device></cdp-device>
+		<cdp-portid></cdp-portid>
+	</wireless-network>
+</detection-run>
